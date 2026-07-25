@@ -1,0 +1,217 @@
+openapi: 3.0.3
+info:
+  title: Flex Pay API (Upgrade) Marketing Offers Orders API
+  description: Flex Pay (by Upgrade, formerly Uplift) lets travel and retail merchants offer Buy Now, Pay Later payment plans. The REST surface covers the Marketing Offers API (monthly-payment pricing offers early in the shopping flow), the Checkout Orders API (create, read, and confirm orders and retrieve the virtual-card payout resource), and the Transactions API (authorize, capture, void, refund — the Direct Settle disbursement model). All requests require an OAuth 2.0 access token obtained with the client-credentials grant and sent as a Bearer token.
+  version: v1
+  contact:
+    name: Flex Pay Integration Support
+    url: https://www.uplift.com/partners/
+servers:
+- url: https://partner.upgrade.com/api/checkout
+  description: Production (checkout + transactions)
+- url: https://partner.credify.tech/api/checkout
+  description: Pre-production (checkout + transactions)
+security:
+- flexPayOAuth: []
+tags:
+- name: Orders
+  description: Checkout Orders API
+paths:
+  /v1/orders:
+    post:
+      operationId: createOrder
+      tags:
+      - Orders
+      summary: Create Order
+      description: Used to create different order types. Look at the order_items array for the different types of orders.
+      externalDocs:
+        url: https://docs.uplift.com/apidocs/creates-an-order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '200':
+          description: Successful order response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+  /v1/orders/{orderId}:
+    get:
+      operationId: getOrder
+      tags:
+      - Orders
+      summary: Read Order
+      description: Retrieves an order. Used to read data in the Flex Pay order. It can be used when there is a doubt if the previous endpoint functioned correctly.
+      externalDocs:
+        url: https://docs.uplift.com/apidocs/retrieves-an-order
+      parameters:
+      - $ref: '#/components/parameters/orderId'
+      responses:
+        '200':
+          description: Successful order response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+  /v1/orders/{orderId}/confirmation:
+    put:
+      operationId: confirmOrder
+      tags:
+      - Orders
+      summary: Confirm Order
+      description: Used to confirm the order to Flex Pay, including their confirmation number. The order is confirmed in their system and they provide us with their confirmation number.
+      externalDocs:
+        url: https://docs.uplift.com/apidocs/confirms-an-order
+      parameters:
+      - $ref: '#/components/parameters/orderId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Request confirmation.
+              required:
+              - confirmationId
+              properties:
+                confirmationId:
+                  type: string
+                  description: Confirmation ID
+      responses:
+        '204':
+          description: Order confirmed
+  /v1/orders/{orderId}/card:
+    get:
+      operationId: getOrderCard
+      tags:
+      - Orders
+      summary: Retrieves an Order's Card resource
+      description: Retrieves the virtual card (payment details for merchant payout) associated with an order.
+      externalDocs:
+        url: https://docs.uplift.com/apidocs/retrieves-an-orders-card-resource
+      parameters:
+      - $ref: '#/components/parameters/orderId'
+      responses:
+        '200':
+          description: Successful payment response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Payment details.
+                properties:
+                  card:
+                    $ref: '#/components/schemas/Card'
+components:
+  parameters:
+    orderId:
+      name: orderId
+      in: path
+      required: true
+      description: Order ID
+      schema:
+        type: string
+  schemas:
+    Order:
+      type: object
+      description: Order details (documented subset — see https://docs.uplift.com/docs/high-level-schema-overview for the full schema guidance).
+      properties:
+        addOns:
+          type: array
+          description: List of addons.
+          items:
+            type: object
+            properties:
+              externalId:
+                type: string
+                description: Unique addon identifier.
+              name:
+                type: string
+                description: Addon name.
+              price:
+                type: string
+                description: Addon price in dollar format.
+                example: '100.13'
+        billingContact:
+          $ref: '#/components/schemas/BillingContact'
+    Card:
+      type: object
+      description: Card details for merchant payout (single-use virtual card).
+      properties:
+        id:
+          type: string
+          nullable: true
+          description: Do not send or set to null in request.
+        ccv:
+          type: string
+          example: '123'
+        expirationMonth:
+          type: integer
+          example: 12
+        expirationYear:
+          type: integer
+          example: 2027
+        nameOnCard:
+          type: string
+          example: Arthur Davis
+        number:
+          type: string
+          example: '5431111111111111'
+        contact:
+          type: object
+          properties:
+            postalCode:
+              type: string
+              example: '99999'
+    BillingContact:
+      type: object
+      properties:
+        city:
+          type: string
+          description: Billing contact city.
+          example: New York City
+        country:
+          type: string
+          description: Billing contact country.
+          enum:
+          - US
+          - CA
+        dateOfBirth:
+          type: string
+          format: date
+          description: Billing contact date of birth in YYYY-MM-DD format.
+          example: '1996-10-21'
+        email:
+          type: string
+          description: Billing contact email.
+          example: sample@flexpay.com
+        firstName:
+          type: string
+          description: Billing contact first name.
+          example: Arthur
+        lastName:
+          type: string
+          description: Billing contact last name.
+          example: Davis
+  securitySchemes:
+    flexPayOAuth:
+      type: oauth2
+      description: 'OAuth 2.0 client-credentials grant. Client IDs and secrets are issued per merchant and per environment by the Flex Pay integration team (server IP allowlisting required). Tokens expire after 30 minutes by default and are sent as `Authorization: Bearer {token}`.'
+      flows:
+        clientCredentials:
+          tokenUrl: https://partner.upgrade.com/api/auth/v1/oauth/token
+          scopes: {}
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Access token from the Flex Pay authorization server, included in the Authorization HTTP header for all API requests.
+externalDocs:
+  description: Flex Pay REST API reference
+  url: https://docs.uplift.com/apidocs
+x-generated: '2026-07-21'
+x-method: generated
+x-source: Generated faithfully from the published Flex Pay REST API reference at https://docs.uplift.com/apidocs (Upgrade, Inc. — Flex Pay, formerly Uplift). Upgrade does not publish a machine-readable OpenAPI; every path, method, parameter, and field below is taken from the documented reference pages (creates-an-order, retrieves-an-order, confirms-an-order, retrieves-an-orders-card-resource, authorize-transaction, void-transaction, capture-transaction, refund-transaction, get-transaction, generates-marketing-offers-for-orders-4, authorization-1). Schemas capture the documented subset of fields, not the full internal model.

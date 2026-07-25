@@ -1,0 +1,222 @@
+openapi: 3.0.3
+info:
+  title: Flex Pay API (Upgrade) Marketing Offers Transactions API
+  description: Flex Pay (by Upgrade, formerly Uplift) lets travel and retail merchants offer Buy Now, Pay Later payment plans. The REST surface covers the Marketing Offers API (monthly-payment pricing offers early in the shopping flow), the Checkout Orders API (create, read, and confirm orders and retrieve the virtual-card payout resource), and the Transactions API (authorize, capture, void, refund — the Direct Settle disbursement model). All requests require an OAuth 2.0 access token obtained with the client-credentials grant and sent as a Bearer token.
+  version: v1
+  contact:
+    name: Flex Pay Integration Support
+    url: https://www.uplift.com/partners/
+servers:
+- url: https://partner.upgrade.com/api/checkout
+  description: Production (checkout + transactions)
+- url: https://partner.credify.tech/api/checkout
+  description: Pre-production (checkout + transactions)
+security:
+- flexPayOAuth: []
+tags:
+- name: Transactions
+  description: Transactions API (Direct Settle disbursement)
+paths:
+  /v1/transactions:
+    post:
+      operationId: authorizeTransaction
+      tags:
+      - Transactions
+      summary: Authorize Transaction
+      description: Using the order_id from the checkout flow, an authorization is the first step using the Transaction API. Once an authorization is submitted against an Order, a new Transaction is created. Once a transaction is authorized you have up to 7 days to submit capture requests; after expiration the remaining amount is automatically voided (see authorization_expiration on the Transaction object).
+      externalDocs:
+        url: https://docs.uplift.com/apidocs/authorize-transaction
+      parameters:
+      - $ref: '#/components/parameters/idempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - order_id
+              properties:
+                order_id:
+                  type: string
+                  format: uuid
+                  description: The order_id received from Flex Pay during the checkout flow.
+                amount:
+                  type: number
+                  format: decimal
+                  minimum: 0
+                  description: The amount you're authorizing for this transaction. If left blank, authorize the remaining approved amount.
+                currency:
+                  type: string
+                  description: The currency in which you're authorizing the transaction for, in ISO 4217 format. Required if amount is provided.
+                merchant_reference_id:
+                  type: string
+                  description: Optional field for merchants to enter their own reference ID to aid in reconciliation.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+  /v1/transactions/{transactionId}:
+    get:
+      operationId: getTransaction
+      tags:
+      - Transactions
+      summary: Get Transaction
+      externalDocs:
+        url: https://docs.uplift.com/apidocs/get-transaction
+      parameters:
+      - $ref: '#/components/parameters/transactionId'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+  /v1/transactions/{transactionId}/void:
+    post:
+      operationId: voidTransaction
+      tags:
+      - Transactions
+      summary: Void Transaction
+      description: Fully or partially void an already authorized transaction (e.g. a cancelled or unfulfillable item). The amount must be less than or equal to the remaining_amount in the Transaction object; voided amounts are permanently deducted and can no longer be captured.
+      externalDocs:
+        url: https://docs.uplift.com/apidocs/void-transaction
+      parameters:
+      - $ref: '#/components/parameters/idempotencyKey'
+      - $ref: '#/components/parameters/transactionId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionAmountRequest'
+      responses:
+        '200':
+          description: Updated Transaction object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+  /v1/transactions/{transactionId}/capture:
+    post:
+      operationId: captureTransaction
+      tags:
+      - Transactions
+      summary: Capture Transaction
+      description: Request payment for the customer's order. Fully capture by submitting an amount equal to the remaining_amount, or partially capture with a smaller amount and request the rest later.
+      externalDocs:
+        url: https://docs.uplift.com/apidocs/capture-transaction
+      parameters:
+      - $ref: '#/components/parameters/idempotencyKey'
+      - $ref: '#/components/parameters/transactionId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionAmountRequest'
+      responses:
+        '200':
+          description: Updated Transaction object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+  /v1/transactions/{transactionId}/refund:
+    post:
+      operationId: refundTransaction
+      tags:
+      - Transactions
+      summary: Refund Transaction
+      description: Fully or partially refund a previously captured transaction with an amount equal to or less than the captured_amount. The refunded amount is returned by netting against your upcoming payout during the disbursement process.
+      externalDocs:
+        url: https://docs.uplift.com/apidocs/refund-transaction
+      parameters:
+      - $ref: '#/components/parameters/idempotencyKey'
+      - $ref: '#/components/parameters/transactionId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionAmountRequest'
+      responses:
+        '200':
+          description: Updated Transaction object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+components:
+  schemas:
+    TransactionAmountRequest:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: decimal
+          minimum: 0
+          description: Amount voided, captured, or refunded. Optional. If left blank, uses the full remaining amount.
+        currency:
+          type: string
+          description: ISO 4217 currency code for this transaction. Required if amount is provided.
+        merchant_reference_id:
+          type: string
+          description: Optional field for merchants to enter their own reference ID to aid in reconciliation.
+    Transaction:
+      type: object
+      description: The Transaction object returned by the Transactions API (documented subset).
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The unique transaction_id generated when an authorization is submitted for an order.
+        original_amount:
+          type: number
+          format: decimal
+          description: The original amount the transaction was authorized for.
+        remaining_amount:
+          type: number
+          format: decimal
+          description: The remaining amount that can be captured.
+        captured_amount:
+          type: number
+          format: decimal
+          description: The cumulative amount that has been successfully captured.
+        authorization_expiration:
+          type: string
+          description: Timestamp after which no new captures may be placed on this transaction and the remaining amount is automatically voided (up to 7 days after authorization).
+  parameters:
+    idempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      description: Idempotency key to prevent duplicate requests.
+      schema:
+        type: string
+    transactionId:
+      name: transactionId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  securitySchemes:
+    flexPayOAuth:
+      type: oauth2
+      description: 'OAuth 2.0 client-credentials grant. Client IDs and secrets are issued per merchant and per environment by the Flex Pay integration team (server IP allowlisting required). Tokens expire after 30 minutes by default and are sent as `Authorization: Bearer {token}`.'
+      flows:
+        clientCredentials:
+          tokenUrl: https://partner.upgrade.com/api/auth/v1/oauth/token
+          scopes: {}
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Access token from the Flex Pay authorization server, included in the Authorization HTTP header for all API requests.
+externalDocs:
+  description: Flex Pay REST API reference
+  url: https://docs.uplift.com/apidocs
+x-generated: '2026-07-21'
+x-method: generated
+x-source: Generated faithfully from the published Flex Pay REST API reference at https://docs.uplift.com/apidocs (Upgrade, Inc. — Flex Pay, formerly Uplift). Upgrade does not publish a machine-readable OpenAPI; every path, method, parameter, and field below is taken from the documented reference pages (creates-an-order, retrieves-an-order, confirms-an-order, retrieves-an-orders-card-resource, authorize-transaction, void-transaction, capture-transaction, refund-transaction, get-transaction, generates-marketing-offers-for-orders-4, authorization-1). Schemas capture the documented subset of fields, not the full internal model.
