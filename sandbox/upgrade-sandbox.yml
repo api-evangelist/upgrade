@@ -1,0 +1,85 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.uplift.com/apidocs/integration-testing-profiles
+description: >-
+  Flex Pay (Upgrade) publishes end-to-end integration test profiles per country
+  — an "Approved Action" and an "Adverse Action" persona for the US and Canada
+  that differ only by birth date — plus sample pre-production UP-codes and a
+  dedicated pre-production API environment. All values below are captured
+  verbatim from the published testing documentation.
+docs:
+  - https://docs.uplift.com/apidocs/integration-testing-profiles
+  - https://docs.uplift.com/docs/testing-details
+  - https://docs.uplift.com/docs/step-1-load-flex-pay-payments
+
+environments:
+  - name: production
+    api_base: https://partner.upgrade.com/api/flexpay
+    js_sdk: https://tag.uplift.com/external/up.js
+    notes: Production UP-code required; debug console messages suppressed.
+  - name: pre-production
+    api_base: https://partner.credify.tech/api/flexpay
+    js_sdk: https://carbon.rc01gw.uplift-platform.com/external/up.js
+    notes: >-
+      Testing UP-code enables debug messages in the browser console. Client IDs
+      and secrets are issued per merchant and per environment after server IP
+      allowlist review.
+
+test_integration_ids:
+  description: Sample pre-production UP-codes published for validation.
+  values:
+    - {vertical: travel, country: US, upcode: UP-37292414-99}
+    - {vertical: travel, country: CA, upcode: UP-37292414-83}
+    - {vertical: retail, country: US, upcode: UP-37292414-94}
+
+test_profiles:
+  - country: US
+    approved_action:
+      first_name: Arthur
+      last_name: Davis
+      home_address: 1013 Weda Cir
+      city: Mayfield
+      state: Kentucky (KY)
+      postal_code: '99999'
+      birthdate: '1963-04-07'
+      email: arthur@uplift.com
+      mobile_number: (555) 555-4206
+      income: '$8,000,000'
+      ssn: 666-58-3507
+      verification_code: '11111'
+      card_number: 4111 1111 1111 1111
+      expiration: 12/28
+      security_code: '123'
+      billing_postal_code: '55555'
+    adverse_action:
+      note: Same as approved profile except first name Emily and birthdate 1963-04-05.
+      first_name: Emily
+      birthdate: '1963-04-05'
+  - country: CA
+    approved_action:
+      first_name: Arthur
+      last_name: Davis
+      home_address: 59 Victoria St
+      city: Bayfield
+      state: Ontario (ON)
+      postal_code: N0M 1G0
+      birthdate: '1963-04-07'
+      email_prod: arthur@uplift.com
+      email_preprod: arthurcanada@upgrade.com
+      mobile_number: (555) 555-4206
+      income: '$8,000,000'
+      sin: optional
+      verification_code: '11111'
+      card_number: 4111 1111 1111 1111
+      expiration: 12/28
+      security_code: '123'
+      billing_postal_code: '55555'
+    adverse_action:
+      note: Same as approved profile except first name Emily and birthdate 1963-04-05.
+      first_name: Emily
+      birthdate: '1963-04-05'
+
+notes:
+  - Two testing profiles per country exercise approved and adverse (declined) applications.
+  - Use the profile information exactly as listed — values are matched by the decisioning system.
+  - Two separate UP-codes are issued per merchant (testing and production).

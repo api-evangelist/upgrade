@@ -1,0 +1,93 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.uplift.com/docs/step-1-load-flex-pay-payments
+description: >-
+  Flex Pay (Upgrade) client-side / embeddable surface. A single up.js script
+  tag exposes the PaymentJS runtime (window.Uplift.Payments), auto-registers the
+  <up-from-pricing> web component with Shadow DOM isolation, and drives the
+  hosted application iFrame. Additional embeddable surfaces cover pay-monthly
+  selectors, the pricing/information modal, marketing banners, and a
+  pre-qualification tool; native SDKs bring the same surface to iOS and
+  Android.
+docs:
+  - https://docs.uplift.com/docs/step-1-load-flex-pay-payments
+  - https://docs.uplift.com/docs/step-5-setup-flex-pay-iframe
+  - https://docs.uplift.com/docs/pay-monthly-selectors
+  - https://docs.uplift.com/docs/from-pricing-and-information-modal
+  - https://docs.uplift.com/docs/pre-qualification-tool
+  - https://docs.uplift.com/docs/marketing-banner
+
+loader:
+  script: https://tag.uplift.com/external/up.js
+  script_preprod: https://carbon.rc01gw.uplift-platform.com/external/up.js
+  install: >-
+    Async snippet with a per-merchant UP-code (UP-XXXXXXXX-XX); no npm install
+    or build step. If up.js fails to load, all Flex Pay elements remain hidden
+    and the page renders normally.
+  runtime: window.Uplift.Payments (PaymentJS)
+  allowlist_domains:
+    - '*.Upgrade.com'
+    - '*.Uplift.com'
+    - '*.FlexPaybyUpgrade.com'
+    - '*.Uplift-Platform.com'
+    - '*.Learning-Uplift.com'
+    - '*.Credify.tech'
+    - '*.optimizely.com'
+    - '*.sentry.io'
+
+families:
+  - name: From Pricing
+    components:
+      - name: up-from-pricing
+        kind: web-component
+        description: >-
+          Auto-registered web component that renders "from $X/mo" monthly
+          pricing anywhere in the shopping funnel, with Shadow DOM isolation.
+  - name: Checkout
+    components:
+      - name: Flex Pay iFrame
+        kind: hosted-iframe
+        description: >-
+          Hosted application/checkout iFrame — the customer completes the quick
+          application and instant decision inside it; status is reported to the
+          merchant callback handler.
+      - name: Pay Monthly selectors
+        kind: ui-pattern
+        description: Payment-method selector states driven by callback payment statuses.
+      - name: Purchase button integration
+        kind: ui-pattern
+        description: >-
+          Booking/purchase button enablement rules plus
+          window.Uplift.Payments.getToken() for virtual-card retrieval.
+  - name: Marketing
+    components:
+      - name: Pricing and information modal
+        kind: modal
+        description: Configurable modal explaining pay-monthly pricing.
+      - name: Marketing banner
+        kind: banner
+        description: Promotional banner components for campaign placements.
+      - name: Pre-qualification tool
+        kind: embedded-flow
+        description: Embedded pre-qualification experience ahead of checkout.
+  - name: Native SDKs
+    components:
+      - name: Flex Pay iOS SDK
+        kind: mobile-sdk
+        docs: https://docs.uplift.com/docs/ios-overview
+      - name: Flex Pay Android SDK
+        kind: mobile-sdk
+        docs: https://docs.uplift.com/docs/android-overview
+  - name: E-commerce platforms
+    components:
+      - name: Flex Pay App (e-commerce platforms)
+        kind: platform-app
+        docs: https://docs.uplift.com/docs/installing-the-flex-pay-app
+        description: Installable app with 'From Pricing' messaging for e-commerce platforms.
+callbacks:
+  handler: >-
+    Merchant-defined JS callback receives payment statuses (OFFER_AVAILABLE,
+    TOKEN_AVAILABLE, TOKEN_RETRIEVED, OFFER_UNAVAILABLE, SERVICE_UNAVAILABLE)
+    and reason codes; on TOKEN_RETRIEVED the single-use virtual card is charged
+    like any other credit card.
+  docs: https://docs.uplift.com/docs/step-4-define-callback-handler

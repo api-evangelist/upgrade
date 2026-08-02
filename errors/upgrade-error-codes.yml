@@ -1,0 +1,87 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.uplift.com/docs/response-reason-code
+description: >-
+  Flex Pay (Upgrade) response reason codes — the error/decision registry the
+  callback handler returns when a Buy Now, Pay Later offer is unavailable
+  (status OFFER_UNAVAILABLE) or a payment token could not be produced (status
+  TOKEN_RETRIEVED with a null token). The reasons key returns an array of these
+  codes, or null when the offer is available. Captured verbatim from the
+  published reason-code reference.
+format: provider-reason-codes
+envelope:
+  field: reasons
+  context: >-
+    Returned in the client callback-handler response; also governed by the
+    payment statuses OFFER_AVAILABLE, TOKEN_AVAILABLE, TOKEN_RETRIEVED,
+    OFFER_UNAVAILABLE, SERVICE_UNAVAILABLE
+    (https://docs.uplift.com/docs/payment-status).
+statuses:
+  - OFFER_AVAILABLE
+  - TOKEN_AVAILABLE
+  - TOKEN_RETRIEVED
+  - OFFER_UNAVAILABLE
+  - SERVICE_UNAVAILABLE
+codes:
+  - code: 0
+    status: OFFER_UNAVAILABLE
+    description: Flex Pay campaign is disabled
+    remediation: Reach out to your account manager to discuss the details of your Flex Pay campaign.
+  - code: 1
+    status: OFFER_UNAVAILABLE
+    description: order_amount is below minimum price threshold
+    remediation: User can return to shopping to increase amount total.
+  - code: 2
+    status: OFFER_UNAVAILABLE
+    description: order_amount is above maximum price threshold
+    remediation: User must reduce their amount total.
+  - code: 3
+    status: OFFER_UNAVAILABLE
+    description: orderInfo object is missing trip dates
+    remediation: Validate that trip dates are sent as expected per the schema required fields.
+  - code: 4
+    status: OFFER_UNAVAILABLE
+    description: The trip start date falls below minimum day window
+    remediation: User must change flight dates to make Flex Pay available.
+  - code: 5
+    status: OFFER_UNAVAILABLE
+    description: The trip start date falls above maximum day window
+    remediation: Flex Pay is not available this far in advance.
+  - code: 6
+    status: OFFER_UNAVAILABLE
+    description: orderInfo object is missing travelers
+    remediation: Validate that traveler information is sent per the schema required fields.
+  - code: 7
+    status: OFFER_UNAVAILABLE / TOKEN_RETRIEVED
+    description: Flex Pay API timeout
+    remediation: Flex Pay will work to resolve this issue.
+  - code: 8
+    status: OFFER_UNAVAILABLE / TOKEN_RETRIEVED
+    description: Fatal error / Flex Pay internal errors
+    remediation: >-
+      Validate trip dates per the schema required fields; if correct, reach out
+      to your account manager or integration lead for support.
+  - code: 9
+    status: OFFER_UNAVAILABLE
+    description: Missing product
+    remediation: Validate that all required fields are sent per the schema required fields.
+  - code: 10
+    status: OFFER_UNAVAILABLE
+    description: Origin destination not supported
+    remediation: The origin/destination was deemed not supported during partner onboarding.
+  - code: 11
+    status: OFFER_UNAVAILABLE
+    description: Language is not supported
+    remediation: 'Supported languages: English (en), French (fr).'
+  - code: 12
+    status: OFFER_UNAVAILABLE
+    description: Currency is not supported
+    remediation: 'Supported currencies: USD, CAD.'
+  - code: 13
+    status: OFFER_UNAVAILABLE
+    description: Country is not supported
+    remediation: 'Supported countries: United States (US), Canada (CA).'
+  - code: 14
+    status: OFFER_UNAVAILABLE
+    description: Product is not supported
+    remediation: orderInfo contains attributes not pertaining to the partner's configured vertical.

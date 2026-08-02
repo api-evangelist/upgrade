@@ -1,0 +1,31 @@
+overlay: 1.0.0
+x-generated: '2026-07-21'
+x-method: generated
+info:
+  title: API Evangelist enhancements for the Flex Pay API (Upgrade)
+  version: 1.0.0
+extends: openapi/upgrade-flexpay-openapi.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist:
+        provider: upgrade
+        catalog: https://raw.githubusercontent.com/api-evangelist/upgrade/refs/heads/main/apis.yml
+        notes: >-
+          Spec is generated from the published Flex Pay REST reference at
+          docs.uplift.com/apidocs — Upgrade publishes no machine-readable
+          OpenAPI. Idempotency-Key is required on all Transactions API write
+          operations; OAuth 2.0 client-credentials tokens default to a
+          30-minute expiry.
+  - target: $.paths['/v1/transactions'].post
+    update:
+      x-idempotency:
+        header: Idempotency-Key
+        required: true
+  - target: $.paths['/v1/orders'].post
+    update:
+      x-sandbox:
+        reference: sandbox/upgrade-sandbox.yml
+        note: >-
+          End-to-end integration testing uses published per-country test
+          profiles (US and Canada, approved and adverse-action variants).

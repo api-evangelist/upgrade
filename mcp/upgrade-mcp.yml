@@ -1,0 +1,43 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: openapi/upgrade-flexpay-openapi.yml
+description: >-
+  Upgrade publishes no official MCP server for the Flex Pay APIs (none found in
+  the Flex Pay documentation, the MCP registry, or npm). This is a candidate
+  tool list derived from the documented Flex Pay REST operations — one tool per
+  operation — for a future hosted or local server.
+server:
+  name: upgrade-flexpay
+  transport: http
+tools:
+  - name: get_offers
+    description: Generate Flex Pay monthly-payment marketing offers for a list of orders.
+    source_operation: openapi/upgrade-flexpay-openapi.yml#getOffers
+  - name: create_order
+    description: Create a Flex Pay order at checkout.
+    source_operation: openapi/upgrade-flexpay-openapi.yml#createOrder
+  - name: get_order
+    description: Retrieve a Flex Pay order.
+    source_operation: openapi/upgrade-flexpay-openapi.yml#getOrder
+  - name: confirm_order
+    description: Confirm an order with the merchant confirmation ID.
+    source_operation: openapi/upgrade-flexpay-openapi.yml#confirmOrder
+  - name: get_order_card
+    description: Retrieve the single-use virtual card issued for an approved order.
+    source_operation: openapi/upgrade-flexpay-openapi.yml#getOrderCard
+  - name: authorize_transaction
+    description: Authorize a transaction against an order (Direct Settle model).
+    source_operation: openapi/upgrade-flexpay-openapi.yml#authorizeTransaction
+  - name: get_transaction
+    description: Retrieve a transaction.
+    source_operation: openapi/upgrade-flexpay-openapi.yml#getTransaction
+  - name: capture_transaction
+    description: Fully or partially capture an authorized transaction.
+    source_operation: openapi/upgrade-flexpay-openapi.yml#captureTransaction
+  - name: void_transaction
+    description: Fully or partially void an authorized transaction.
+    source_operation: openapi/upgrade-flexpay-openapi.yml#voidTransaction
+  - name: refund_transaction
+    description: Fully or partially refund a captured transaction.
+    source_operation: openapi/upgrade-flexpay-openapi.yml#refundTransaction

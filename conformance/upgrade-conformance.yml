@@ -1,0 +1,51 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  https://docs.uplift.com/apidocs (authorization, transactions) and
+  https://www.upgrade.com/security/ — standards conformance asserted from the
+  provider's published documentation; derived checks from
+  openapi/upgrade-flexpay-openapi.yml.
+standards:
+  - id: oauth2
+    conforms: true
+    evidence: >-
+      "Flex Pay's APIs utilize the OAuth 2.0 protocol for request
+      authorization" — client-credentials grant with Bearer access tokens
+      (https://docs.uplift.com/apidocs/authorization-1).
+  - id: oauth2-client-credentials
+    conforms: true
+    evidence: Token endpoint POST /api/auth/v1/oauth/token?grant_type=client_credentials.
+  - id: oidc
+    conforms: false
+    evidence: No OpenID Connect discovery or id_token surface documented.
+  - id: idempotency
+    conforms: true
+    evidence: >-
+      Required Idempotency-Key header on all Transactions API write operations
+      (authorize/void/capture/refund) "to prevent duplicate requests".
+  - id: iso4217-currencies
+    conforms: true
+    evidence: Transaction currency documented as ISO 4217; supported USD and CAD.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      Errors are communicated as provider-specific payment statuses and numeric
+      reason codes, not application/problem+json.
+  - id: json-api
+    conforms: false
+    evidence: Plain JSON request/response bodies; no JSON:API media type.
+  - id: pagination
+    conforms: false
+    evidence: No pagination conventions documented.
+  - id: pci-dss
+    conforms: unknown
+    evidence: >-
+      Flex Pay disburses via single-use virtual cards that merchants charge
+      through their existing card processing; no PCI attestation is published
+      on the public docs or security page.
+  - id: responsible-disclosure
+    conforms: true
+    evidence: >-
+      Coordinated vulnerability disclosure program at
+      https://www.upgrade.com/security/ (security-reports@upgrade.com; no paid
+      bug bounty).

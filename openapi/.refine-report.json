@@ -1,0 +1,18 @@
+{
+  "provider": "upgrade",
+  "sources": [
+    "upgrade-marketing-offers-api-openapi.yml",
+    "upgrade-orders-api-openapi.yml",
+    "upgrade-transactions-api-openapi.yml"
+  ],
+  "outputs": [
+    "upgrade-marketing-offers-api-openapi.yml",
+    "upgrade-orders-api-openapi.yml",
+    "upgrade-transactions-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

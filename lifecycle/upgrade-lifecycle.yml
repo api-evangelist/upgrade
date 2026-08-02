@@ -1,0 +1,44 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.uplift.com/
+description: >-
+  Lifecycle posture of the Flex Pay (Upgrade) partner APIs, from the published
+  documentation. Versioning is URI-path based (/v1 across checkout, marketing,
+  and transactions); the docs are organized into v1 and v1-api collections.
+  Superseded component integrations are explicitly labeled [LEGACY] and paired
+  with migration guides rather than dated sunsets. A public status page is
+  published at status.upgrade.com (hosted on incident.io); no deprecation
+  policy document, SLA, or dated changelog is published — service monitoring is
+  handled internally ("Flex Pay closely monitors systems 24/7") with escalation
+  through account managers.
+versioning:
+  scheme: uri-path
+  current: v1
+  docs: https://docs.uplift.com/apidocs/introduction-1
+deprecation:
+  policy_url: null
+  sunset_header: false
+  notes: >-
+    Legacy integrations (From Pricing modal, Pay Monthly selectors, campaign
+    targeting, promotional financing) are marked [LEGACY] in the docs with
+    migration guides, e.g. From Pricing v2 Migration
+    (https://docs.uplift.com/docs/from-pricing-v2-migration).
+migrations:
+  - name: Uplift Pay Monthly to Flex Pay rebrand
+    notes: >-
+      "Uplift Pay Monthly is now Flex Pay" — documentation is being updated in
+      place; existing integrations remain functional during the transition.
+  - name: From Pricing v2
+    docs: https://docs.uplift.com/docs/from-pricing-v2-migration
+sla:
+  url: null
+  notes: >-
+    No public SLA. 24/7 internal monitoring with partner escalation via account
+    managers / integration leads and an integration Slack channel
+    (https://docs.uplift.com/docs/contact-information).
+status_page: https://status.upgrade.com
+status_page_notes: >-
+  301-redirects to https://statuspage.incident.io/upgrade ("Upgrade Status",
+  components reporting operational; probed 2026-07-21).
+changelog: null
+deprecated_operations: []

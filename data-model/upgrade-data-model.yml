@@ -1,0 +1,45 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/upgrade-flexpay-openapi.yml
+docs: https://docs.uplift.com/docs/high-level-schema-overview
+description: >-
+  Entity-relationship graph of the Flex Pay API (Upgrade), derived from the
+  generated OpenAPI (itself faithful to the published reference) and the
+  documented resource objects. An Order is the anchor: it carries billing
+  contact and add-ons, yields a single-use virtual Card for merchant payout,
+  and (in the Direct Settle model) has Transactions authorized against it that
+  are then captured, voided, or refunded.
+entities:
+  - name: Order
+    id_field: orderId
+    description: >-
+      A Flex Pay order created during checkout; confirmed by the merchant with
+      a confirmationId once booked.
+    fields: [addOns, billingContact, order_items]
+  - name: BillingContact
+    description: Customer billing identity on the order (name, address, email, DOB).
+  - name: AddOn
+    id_field: externalId
+    description: Ancillary item on an order (name, price).
+  - name: Card
+    description: >-
+      Single-use virtual card issued against an approved order for merchant
+      payout (number, expiration, ccv, nameOnCard, contact postal code).
+  - name: Transaction
+    id_field: id (uuid)
+    description: >-
+      Authorization against an order in the Direct Settle model, with
+      original_amount, remaining_amount, captured_amount, and
+      authorization_expiration; mutated by capture, void, and refund events.
+  - name: Offer
+    description: >-
+      Marketing offer (monthly payment pricing + availability) generated for
+      orders via the Marketing Offers API; unavailability is explained by
+      reason codes.
+relationships:
+  - {from: Order, to: BillingContact, type: has_one, via: billingContact}
+  - {from: Order, to: AddOn, type: has_many, via: addOns}
+  - {from: Order, to: Card, type: has_one, via: 'GET /v1/orders/{orderId}/card'}
+  - {from: Transaction, to: Order, type: belongs_to, via: order_id}
+  - {from: Order, to: Transaction, type: has_many, via: 'POST /v1/transactions (authorize with order_id)'}
+  - {from: Offer, to: Order, type: belongs_to, via: 'orders[] in the marketing offers request'}

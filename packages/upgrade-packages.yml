@@ -1,0 +1,45 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  https://docs.uplift.com (SDK documentation) + public registry checks (npm
+  search) — Upgrade ships first-party Flex Pay client SDKs, but distributes
+  them itself (CDN script tag and partner-delivered archives) rather than
+  through public package registries.
+description: >-
+  First-party client libraries for the Flex Pay (Upgrade) partner platform.
+  The web SDK (PaymentJS) loads from Upgrade's CDN via a script-tag snippet —
+  "No npm installs, no build steps"; the iOS SDK is delivered to partners as a
+  .zip by a Flex Pay representative; the Android SDK (upliftsdk) is delivered
+  as an archive added to a local/custom Maven repository. No packages are
+  published to npm, PyPI, Maven Central, NuGet, RubyGems, Packagist, crates.io,
+  or pkg.go.dev.
+packages:
+  - language: javascript
+    registry: cdn
+    name: up.js (PaymentJS)
+    url: https://tag.uplift.com/external/up.js
+    install: >-
+      Script-tag snippet with per-merchant UP-code; exposes
+      window.Uplift.Payments and the <up-from-pricing> web component.
+    docs: https://docs.uplift.com/docs/step-1-load-flex-pay-payments
+    official: true
+  - language: swift
+    registry: partner-distribution
+    name: Flex Pay iOS SDK
+    install: Delivered to partners as a .zip file by a Flex Pay representative.
+    docs: https://docs.uplift.com/docs/step-1-installing-the-sdk-ios
+    official: true
+  - language: kotlin
+    registry: partner-distribution
+    name: 'com.uplift.sdk:upliftsdk'
+    install: >-
+      SDK .zip (upliftsdk folder) from a Flex Pay representative, added as a
+      local/custom Maven repository, then
+      `implementation "com.uplift.sdk:upliftsdk:x.y.z"` in build.gradle.
+    docs: https://docs.uplift.com/docs/step1-installing-sdk
+    official: true
+registry_checks:
+  - {registry: npm, query: uplift payments, result: none-first-party}
+notes: >-
+  A Kotlin example project is published in the docs
+  (https://docs.uplift.com/docs/kotlin-example-project).

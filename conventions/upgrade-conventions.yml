@@ -1,0 +1,90 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  https://docs.uplift.com/apidocs — cross-cutting request/response semantics of
+  the Flex Pay REST APIs (Upgrade), captured from the authorization, orders,
+  transactions, payment-status, and response-reason-code reference pages.
+description: >-
+  How the Flex Pay APIs behave across operations: OAuth 2.0 client-credentials
+  authentication with short-lived Bearer tokens, a required Idempotency-Key
+  header on every Transactions API write, URI-path versioning (/v1), ISO 4217
+  currency handling, and a reason-code envelope for offer availability.
+
+base_urls:
+  production: https://partner.upgrade.com/api/flexpay
+  pre_production: https://partner.credify.tech/api/flexpay
+api_style: REST over HTTPS, JSON requests and responses
+
+authentication:
+  scheme: OAuth 2.0 client-credentials; access token as Bearer in the Authorization header
+  token_expiry: 30 minutes (default); request a new token shortly before expiry
+  ip_allowlist: Server IP addresses must be allowlisted before credentials are issued
+  docs: https://docs.uplift.com/apidocs/authorization-1
+  detail: authentication/upgrade-authentication.yml
+
+idempotency:
+  supported: true
+  mechanism: Idempotency-Key request header
+  required: true
+  applies_to: >-
+    All Transactions API write operations — authorize (POST /v1/transactions),
+    void, capture, and refund (POST /v1/transactions/{transactionId}/...).
+    Documented as "Idempotency key to prevent duplicate requests."
+  docs: https://docs.uplift.com/apidocs/authorize-transaction
+  detail: openapi/upgrade-flexpay-openapi.yml
+
+versioning:
+  style: uri-path
+  current: v1
+  notes: >-
+    Documentation collections are versioned v1 / v1-api; legacy component docs
+    are explicitly labeled [LEGACY] with migration guides (e.g. From Pricing v2
+    Migration).
+
+pagination:
+  documented: false
+  notes: >-
+    No pagination conventions are published — the API surface is order- and
+    transaction-scoped (single-resource reads).
+
+error_envelope:
+  style: reason codes
+  field: reasons
+  notes: >-
+    Offer availability is communicated through payment statuses
+    (OFFER_AVAILABLE, TOKEN_AVAILABLE, TOKEN_RETRIEVED, OFFER_UNAVAILABLE,
+    SERVICE_UNAVAILABLE) with a reasons[] array of numeric codes when an offer
+    is unavailable.
+  detail: errors/upgrade-error-codes.yml
+
+currencies:
+  format: ISO 4217
+  supported: [USD, CAD]
+countries:
+  supported: [US, CA]
+languages:
+  supported: [en, fr]
+
+amounts:
+  notes: >-
+    Marketing/checkout component pricing is expressed in minor units (cents) in
+    callback responses; Transactions API amounts are decimal numbers with an
+    optional ISO 4217 currency (required when amount is provided).
+
+capture_window:
+  notes: >-
+    Authorizations expire after up to 7 days (authorization_expiration field);
+    the remaining amount is automatically voided after expiration.
+
+rate_limits:
+  documented: false
+
+request_tracing:
+  documented: false
+  notes: merchant_reference_id is available on transaction writes for reconciliation.
+
+related:
+  - errors/upgrade-error-codes.yml
+  - authentication/upgrade-authentication.yml
+  - lifecycle/upgrade-lifecycle.yml
+  - sandbox/upgrade-sandbox.yml

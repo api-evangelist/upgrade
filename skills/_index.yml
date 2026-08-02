@@ -1,0 +1,15 @@
+generated: '2026-07-21'
+method: generated
+skills:
+  - file: upgrade-checkout-order-and-payout.md
+    name: Create, confirm, and get paid for a Flex Pay order
+    api: openapi/upgrade-flexpay-openapi.yml
+    operations: [createOrder, getOrder, confirmOrder, getOrderCard]
+  - file: upgrade-direct-settle-transactions.md
+    name: Direct Settle transactions (authorize, capture, void, refund)
+    api: openapi/upgrade-flexpay-openapi.yml
+    operations: [authorizeTransaction, getTransaction, captureTransaction, voidTransaction, refundTransaction]
+  - file: upgrade-marketing-offers.md
+    name: Show Flex Pay monthly pricing with the Marketing Offers API
+    api: openapi/upgrade-flexpay-openapi.yml
+    operations: [getOffers]

@@ -1,28 +1,151 @@
 aid: upgrade
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/upgrade.png
 name: Upgrade
-description: 'Upgrade is a company surfaced as a portfolio company of ribbit-capital, union-square-ventures
-  and added to the API Evangelist network as a stub for enrichment. Sector: fintech. This profile is a
-  lead awaiting the enrichment pipeline.'
+description: >-
+  Upgrade is a San Francisco-based consumer fintech offering personal loans,
+  the Upgrade Card, Rewards Checking, savings accounts, and Flex Pay — the buy
+  now, pay later platform formerly known as Uplift, serving travel and retail
+  merchants in the US and Canada. Upgrade is a financial technology company,
+  not a bank; products are offered through bank partners. Its developer surface
+  is the Flex Pay partner platform: OAuth 2.0-secured Marketing Offers,
+  Checkout Orders, and Transactions REST APIs, an embeddable up.js checkout
+  with the up-from-pricing web component, and iOS/Android SDKs, documented at
+  docs.uplift.com.
 url: https://raw.githubusercontent.com/api-evangelist/upgrade/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - ribbit-capital
 - union-square-ventures
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: enriched
+x-tier-reason: flex-pay-partner-api
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
 - Fintech
-apis: []
+- Lending
+- Buy Now Pay Later
+- Payments
+- Credit Cards
+- Banking
+- Travel
+apis:
+- aid: upgrade:upgrade-marketing-offers-api
+  name: Upgrade Marketing Offers API
+  description: Marketing Offers API
+  humanURL: https://docs.uplift.com/apidocs
+  baseURL: https://partner.upgrade.com/api/flexpay
+  tags:
+  - Marketing Offers
+  properties:
+  - type: OpenAPI
+    url: openapi/upgrade-marketing-offers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.uplift.com/apidocs
+- aid: upgrade:upgrade-orders-api
+  name: Upgrade Orders API
+  description: Checkout Orders API
+  humanURL: https://docs.uplift.com/apidocs
+  baseURL: https://partner.upgrade.com/api/flexpay
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/upgrade-orders-api-openapi.yml
+  - type: Documentation
+    url: https://docs.uplift.com/apidocs
+- aid: upgrade:upgrade-transactions-api
+  name: Upgrade Transactions API
+  description: Transactions API (Direct Settle disbursement)
+  humanURL: https://docs.uplift.com/apidocs
+  baseURL: https://partner.upgrade.com/api/flexpay
+  tags:
+  - Transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/upgrade-transactions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.uplift.com/apidocs
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: TrustCenter
+  url: security/upgrade-trust-center.yml
+- type: Compliance
+  url: https://trust.upgrade.com/
+- type: DomainSecurity
+  url: security/upgrade-domain-security.yml
 - type: Website
   url: https://www.upgrade.com
+- type: DeveloperPortal
+  url: https://docs.uplift.com/
+- type: Documentation
+  url: https://docs.uplift.com/docs
+- type: APIReference
+  url: https://docs.uplift.com/apidocs
+- type: GettingStarted
+  url: https://docs.uplift.com/docs/how-to-use-this-guide
+- type: Support
+  url: https://www.upgrade.com/help/
+- type: Authentication
+  url: authentication/upgrade-authentication.yml
+- type: LLMsTxt
+  url: llms/upgrade-llms.txt
+- type: Sandbox
+  url: sandbox/upgrade-sandbox.yml
+- type: ErrorCatalog
+  url: errors/upgrade-error-codes.yml
+- type: Conventions
+  url: conventions/upgrade-conventions.yml
+- type: Idempotency
+  url: conventions/upgrade-conventions.yml
+- type: Conformance
+  url: conformance/upgrade-conformance.yml
+- type: Components
+  url: components/upgrade-components.yml
+- type: DataModel
+  url: data-model/upgrade-data-model.yml
+- type: MCPServer
+  url: mcp/upgrade-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: VulnerabilityDisclosure
+  url: security/upgrade-vulnerability-disclosure.yml
+- type: Security
+  url: https://www.upgrade.com/security/
+- type: Packages
+  url: packages/upgrade-packages.yml
+- type: SDKs
+  url: packages/upgrade-packages.yml
+- type: Lifecycle
+  url: lifecycle/upgrade-lifecycle.yml
+- type: StatusPage
+  url: https://status.upgrade.com
+- type: TermsOfService
+  url: https://www.upgrade.com/funnel/borrower-documents/TERMS_OF_USE
+- type: PrivacyPolicy
+  url: https://www.upgrade.com/funnel/borrower-documents/PRIVACY_POLICY?productType=PERSONAL_LOAN
+- type: Login
+  url: https://www.upgrade.com/portal/
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 21
+  pass: local-v1
