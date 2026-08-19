@@ -1,0 +1,105 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Flex Pay API (Upgrade) Marketing Offers Orders API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "https://partner.upgrade.com/api/auth/v1/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://partner.upgrade.com/api/checkout/v1/orders",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Used to create different order types. Look at the order_items array for the different types of orders."
+        },
+        {
+          "info": {
+            "name": "Read Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://partner.upgrade.com/api/checkout/v1/orders/:orderId",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              }
+            ]
+          },
+          "docs": "Retrieves an order. Used to read data in the Flex Pay order. It can be used when there is a doubt if the previous endpoint functioned correctly."
+        },
+        {
+          "info": {
+            "name": "Confirm Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://partner.upgrade.com/api/checkout/v1/orders/:orderId/confirmation",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Used to confirm the order to Flex Pay, including their confirmation number. The order is confirmed in their system and they provide us with their confirmation number."
+        },
+        {
+          "info": {
+            "name": "Retrieves an Order's Card resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://partner.upgrade.com/api/checkout/v1/orders/:orderId/card",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "Order ID"
+              }
+            ]
+          },
+          "docs": "Retrieves the virtual card (payment details for merchant payout) associated with an order."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

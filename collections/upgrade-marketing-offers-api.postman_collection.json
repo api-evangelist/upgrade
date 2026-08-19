@@ -1,0 +1,153 @@
+{
+  "item": [
+    {
+      "id": "6396baab-4e76-4144-a8f8-7a771ff06d7e",
+      "name": "Marketing Offers",
+      "description": {
+        "content": "Marketing Offers API",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "047d9a37-5dcf-4845-b5fd-ef4beaba28b1",
+          "name": "Get offers",
+          "request": {
+            "name": "Get offers",
+            "description": {
+              "content": "Generates marketing offers (monthly-payment pricing and availability) for a list of orders, for display early in the shopping flow.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "marketing",
+                "offers"
+              ],
+              "host": [
+                "{{v1-marketing-offers-Url}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"integrationId\": \"<string>\",\n  \"orders\": [\n    {\n      \"addOns\": [\n        {\n          \"externalId\": \"<string>\",\n          \"name\": \"<string>\",\n          \"price\": \"<string>\"\n        },\n        {\n          \"externalId\": \"<string>\",\n          \"name\": \"<string>\",\n          \"price\": \"<string>\"\n        }\n      ],\n      \"billingContact\": {\n        \"city\": \"<string>\",\n        \"country\": \"<string>\",\n        \"dateOfBirth\": \"<date>\",\n        \"email\": \"<string>\",\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\"\n      }\n    },\n    {\n      \"addOns\": [\n        {\n          \"externalId\": \"<string>\",\n          \"name\": \"<string>\",\n          \"price\": \"<string>\"\n        },\n        {\n          \"externalId\": \"<string>\",\n          \"name\": \"<string>\",\n          \"price\": \"<string>\"\n        }\n      ],\n      \"billingContact\": {\n        \"city\": \"<string>\",\n        \"country\": \"<string>\",\n        \"dateOfBirth\": \"<date>\",\n        \"email\": \"<string>\",\n        \"firstName\": \"<string>\",\n        \"lastName\": \"<string>\"\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ff0b4e27-7286-453e-a6de-eeb14e26b71e",
+              "name": "Marketing offers response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketing",
+                    "offers"
+                  ],
+                  "host": [
+                    "{{v1-marketing-offers-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"integrationId\": \"UP-12345678-9\",\n  \"orders\": [\n    {\n      \"addOns\": [\n        {\n          \"externalId\": \"<string>\",\n          \"name\": \"<string>\",\n          \"price\": \"100.13\"\n        },\n        {\n          \"externalId\": \"<string>\",\n          \"name\": \"<string>\",\n          \"price\": \"100.13\"\n        }\n      ],\n      \"billingContact\": {\n        \"city\": \"New York City\",\n        \"country\": \"<string>\",\n        \"dateOfBirth\": \"1996-10-21\",\n        \"email\": \"sample@flexpay.com\",\n        \"firstName\": \"Arthur\",\n        \"lastName\": \"Davis\"\n      }\n    },\n    {\n      \"addOns\": [\n        {\n          \"externalId\": \"<string>\",\n          \"name\": \"<string>\",\n          \"price\": \"100.13\"\n        },\n        {\n          \"externalId\": \"<string>\",\n          \"name\": \"<string>\",\n          \"price\": \"100.13\"\n        }\n      ],\n      \"billingContact\": {\n        \"city\": \"New York City\",\n        \"country\": \"<string>\",\n        \"dateOfBirth\": \"1996-10-21\",\n        \"email\": \"sample@flexpay.com\",\n        \"firstName\": \"Arthur\",\n        \"lastName\": \"Davis\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://partner.upgrade.com/api/checkout",
+      "key": "baseUrl"
+    },
+    {
+      "type": "string",
+      "value": "https://partner.upgrade.com/api/flexpay",
+      "key": "v1-marketing-offers-Url"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "accessTokenUrl",
+        "value": "https://partner.upgrade.com/api/auth/v1/oauth/token"
+      },
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0a29eddd-bfa3-43fa-ab63-ee620d59f159",
+    "name": "Flex Pay API (Upgrade) Marketing Offers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Flex Pay (by Upgrade, formerly Uplift) lets travel and retail merchants offer Buy Now, Pay Later payment plans. The REST surface covers the Marketing Offers API (monthly-payment pricing offers early in the shopping flow), the Checkout Orders API (create, read, and confirm orders and retrieve the virtual-card payout resource), and the Transactions API (authorize, capture, void, refund — the Direct Settle disbursement model). All requests require an OAuth 2.0 access token obtained with the client-credentials grant and sent as a Bearer token.\n\nContact Support:\n Name: Flex Pay Integration Support",
+      "type": "text/plain"
+    }
+  }
+}

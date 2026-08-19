@@ -1,0 +1,457 @@
+{
+  "item": [
+    {
+      "id": "8330f72b-77ba-43ff-87da-24a64838f65c",
+      "name": "Orders",
+      "description": {
+        "content": "Checkout Orders API",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c0f75053-c5ab-467e-8cd0-fe6258d15186",
+          "name": "Create Order",
+          "request": {
+            "name": "Create Order",
+            "description": {
+              "content": "Used to create different order types. Look at the order_items array for the different types of orders.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"addOns\": [\n    {\n      \"externalId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"price\": \"<string>\"\n    },\n    {\n      \"externalId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"price\": \"<string>\"\n    }\n  ],\n  \"billingContact\": {\n    \"city\": \"<string>\",\n    \"country\": \"<string>\",\n    \"dateOfBirth\": \"<date>\",\n    \"email\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3c7d8658-dfdd-43bb-84df-9aa6f1a01218",
+              "name": "Successful order response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"addOns\": [\n    {\n      \"externalId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"price\": \"100.13\"\n    },\n    {\n      \"externalId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"price\": \"100.13\"\n    }\n  ],\n  \"billingContact\": {\n    \"city\": \"New York City\",\n    \"country\": \"<string>\",\n    \"dateOfBirth\": \"1996-10-21\",\n    \"email\": \"sample@flexpay.com\",\n    \"firstName\": \"Arthur\",\n    \"lastName\": \"Davis\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"addOns\": [\n    {\n      \"externalId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"price\": \"100.13\"\n    },\n    {\n      \"externalId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"price\": \"100.13\"\n    }\n  ],\n  \"billingContact\": {\n    \"city\": \"New York City\",\n    \"country\": \"<string>\",\n    \"dateOfBirth\": \"1996-10-21\",\n    \"email\": \"sample@flexpay.com\",\n    \"firstName\": \"Arthur\",\n    \"lastName\": \"Davis\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "89f89513-2951-4b04-a35f-f590201d5625",
+          "name": "Read Order",
+          "request": {
+            "name": "Read Order",
+            "description": {
+              "content": "Retrieves an order. Used to read data in the Flex Pay order. It can be used when there is a doubt if the previous endpoint functioned correctly.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "orders",
+                ":orderId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) Order ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "143aeb20-64a2-4059-ae92-d7a9286ae57f",
+              "name": "Successful order response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"addOns\": [\n    {\n      \"externalId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"price\": \"100.13\"\n    },\n    {\n      \"externalId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"price\": \"100.13\"\n    }\n  ],\n  \"billingContact\": {\n    \"city\": \"New York City\",\n    \"country\": \"<string>\",\n    \"dateOfBirth\": \"1996-10-21\",\n    \"email\": \"sample@flexpay.com\",\n    \"firstName\": \"Arthur\",\n    \"lastName\": \"Davis\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a7c5a42c-0c09-4c11-b836-dbdb44ea24eb",
+          "name": "Confirm Order",
+          "request": {
+            "name": "Confirm Order",
+            "description": {
+              "content": "Used to confirm the order to Flex Pay, including their confirmation number. The order is confirmed in their system and they provide us with their confirmation number.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "orders",
+                ":orderId",
+                "confirmation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) Order ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"confirmationId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0d251e97-acd7-4a9f-bcae-ecb483b6b166",
+              "name": "Order confirmed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "orders",
+                    ":orderId",
+                    "confirmation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"confirmationId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6df5f556-7b27-4836-b63e-f3c5cffe56f4",
+          "name": "Retrieves an Order's Card resource",
+          "request": {
+            "name": "Retrieves an Order's Card resource",
+            "description": {
+              "content": "Retrieves the virtual card (payment details for merchant payout) associated with an order.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "orders",
+                ":orderId",
+                "card"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) Order ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a6b7b51a-4a99-4fd5-8a07-817a594cc78a",
+              "name": "Successful payment response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "orders",
+                    ":orderId",
+                    "card"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"card\": {\n    \"id\": \"string\",\n    \"ccv\": \"123\",\n    \"expirationMonth\": 12,\n    \"expirationYear\": 2027,\n    \"nameOnCard\": \"Arthur Davis\",\n    \"number\": \"5431111111111111\",\n    \"contact\": {\n      \"postalCode\": \"99999\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://partner.upgrade.com/api/checkout",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "accessTokenUrl",
+        "value": "https://partner.upgrade.com/api/auth/v1/oauth/token"
+      },
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1cfc73fc-ffa6-410d-9e58-e7c03017b4b2",
+    "name": "Flex Pay API (Upgrade) Marketing Offers Orders API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Flex Pay (by Upgrade, formerly Uplift) lets travel and retail merchants offer Buy Now, Pay Later payment plans. The REST surface covers the Marketing Offers API (monthly-payment pricing offers early in the shopping flow), the Checkout Orders API (create, read, and confirm orders and retrieve the virtual-card payout resource), and the Transactions API (authorize, capture, void, refund — the Direct Settle disbursement model). All requests require an OAuth 2.0 access token obtained with the client-credentials grant and sent as a Bearer token.\n\nContact Support:\n Name: Flex Pay Integration Support",
+      "type": "text/plain"
+    }
+  }
+}
