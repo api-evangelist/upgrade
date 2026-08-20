@@ -62,6 +62,8 @@ apis:
   humanURL: https://docs.uplift.com/apidocs
   baseURL: https://partner.upgrade.com/api/flexpay
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
@@ -74,6 +76,8 @@ apis:
   humanURL: https://docs.uplift.com/apidocs
   baseURL: https://partner.upgrade.com/api/flexpay
   tags:
+  - Transaction
+  tags_raw:
   - Transactions
   properties:
   - type: OpenAPI
