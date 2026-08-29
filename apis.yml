@@ -102,6 +102,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/upgrade-capability-edges.yml
+  name: Upgrade Business Capability Map
 - type: Overlay
   url: overlays/upgrade-flexpay-overlay.yaml
 - type: TrustCenter
