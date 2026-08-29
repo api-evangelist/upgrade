@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Flex Pay API (Upgrade) Marketing Offers Orders API
   description: Flex Pay (by Upgrade, formerly Uplift) lets travel and retail merchants offer Buy Now, Pay Later payment plans. The REST surface covers the Marketing Offers API (monthly-payment pricing offers early in the shopping flow), the Checkout Orders API (create, read, and confirm orders and retrieve the virtual-card payout resource), and the Transactions API (authorize, capture, void, refund — the Direct Settle disbursement model). All requests require an OAuth 2.0 access token obtained with the client-credentials grant and sent as a Bearer token.
@@ -116,57 +116,6 @@ components:
       schema:
         type: string
   schemas:
-    Order:
-      type: object
-      description: Order details (documented subset — see https://docs.uplift.com/docs/high-level-schema-overview for the full schema guidance).
-      properties:
-        addOns:
-          type: array
-          description: List of addons.
-          items:
-            type: object
-            properties:
-              externalId:
-                type: string
-                description: Unique addon identifier.
-              name:
-                type: string
-                description: Addon name.
-              price:
-                type: string
-                description: Addon price in dollar format.
-                example: '100.13'
-        billingContact:
-          $ref: '#/components/schemas/BillingContact'
-    Card:
-      type: object
-      description: Card details for merchant payout (single-use virtual card).
-      properties:
-        id:
-          type: string
-          nullable: true
-          description: Do not send or set to null in request.
-        ccv:
-          type: string
-          example: '123'
-        expirationMonth:
-          type: integer
-          example: 12
-        expirationYear:
-          type: integer
-          example: 2027
-        nameOnCard:
-          type: string
-          example: Arthur Davis
-        number:
-          type: string
-          example: '5431111111111111'
-        contact:
-          type: object
-          properties:
-            postalCode:
-              type: string
-              example: '99999'
     BillingContact:
       type: object
       properties:
@@ -197,6 +146,58 @@ components:
           type: string
           description: Billing contact last name.
           example: Davis
+    Order:
+      type: object
+      description: Order details (documented subset — see https://docs.uplift.com/docs/high-level-schema-overview for the full schema guidance).
+      properties:
+        addOns:
+          type: array
+          description: List of addons.
+          items:
+            type: object
+            properties:
+              externalId:
+                type: string
+                description: Unique addon identifier.
+              name:
+                type: string
+                description: Addon name.
+              price:
+                type: string
+                description: Addon price in dollar format.
+                example: '100.13'
+        billingContact:
+          $ref: '#/components/schemas/BillingContact'
+    Card:
+      type: object
+      description: Card details for merchant payout (single-use virtual card).
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          description: Do not send or set to null in request.
+        ccv:
+          type: string
+          example: '123'
+        expirationMonth:
+          type: integer
+          example: 12
+        expirationYear:
+          type: integer
+          example: 2027
+        nameOnCard:
+          type: string
+          example: Arthur Davis
+        number:
+          type: string
+          example: '5431111111111111'
+        contact:
+          type: object
+          properties:
+            postalCode:
+              type: string
+              example: '99999'
   securitySchemes:
     flexPayOAuth:
       type: oauth2
