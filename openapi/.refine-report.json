@@ -1,9 +1,7 @@
 {
   "provider": "upgrade",
   "sources": [
-    "upgrade-marketing-offers-api-openapi.yml",
-    "upgrade-orders-api-openapi.yml",
-    "upgrade-transactions-api-openapi.yml"
+    "_ae-authored/upgrade-flexpay-openapi.yml"
   ],
   "outputs": [
     "upgrade-marketing-offers-api-openapi.yml",
@@ -14,10 +12,13 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "upgrade-marketing-offers-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "upgrade-orders-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "upgrade-transactions-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "upgrade-flexpay-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "upgrade-marketing-offers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "upgrade-orders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "upgrade-transactions-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

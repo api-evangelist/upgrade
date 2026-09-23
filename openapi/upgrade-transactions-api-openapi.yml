@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
-  title: Flex Pay API (Upgrade) Marketing Offers Transactions API
-  description: Flex Pay (by Upgrade, formerly Uplift) lets travel and retail merchants offer Buy Now, Pay Later payment plans. The REST surface covers the Marketing Offers API (monthly-payment pricing offers early in the shopping flow), the Checkout Orders API (create, read, and confirm orders and retrieve the virtual-card payout resource), and the Transactions API (authorize, capture, void, refund — the Direct Settle disbursement model). All requests require an OAuth 2.0 access token obtained with the client-credentials grant and sent as a Bearer token.
+  title: Flex Pay API (Upgrade) Transactions API
+  description: Flex Pay (by Upgrade, formerly Uplift) lets travel and retail merchants offer Buy Now, Pay Later payment plans.
   version: v1
   contact:
     name: Flex Pay Integration Support
@@ -165,20 +165,6 @@ components:
       schema:
         type: string
   schemas:
-    TransactionAmountRequest:
-      type: object
-      properties:
-        amount:
-          type: number
-          format: decimal
-          minimum: 0
-          description: Amount voided, captured, or refunded. Optional. If left blank, uses the full remaining amount.
-        currency:
-          type: string
-          description: ISO 4217 currency code for this transaction. Required if amount is provided.
-        merchant_reference_id:
-          type: string
-          description: Optional field for merchants to enter their own reference ID to aid in reconciliation.
     Transaction:
       type: object
       description: The Transaction object returned by the Transactions API (documented subset).
@@ -202,6 +188,20 @@ components:
         authorization_expiration:
           type: string
           description: Timestamp after which no new captures may be placed on this transaction and the remaining amount is automatically voided (up to 7 days after authorization).
+    TransactionAmountRequest:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: decimal
+          minimum: 0
+          description: Amount voided, captured, or refunded. Optional. If left blank, uses the full remaining amount.
+        currency:
+          type: string
+          description: ISO 4217 currency code for this transaction. Required if amount is provided.
+        merchant_reference_id:
+          type: string
+          description: Optional field for merchants to enter their own reference ID to aid in reconciliation.
   securitySchemes:
     flexPayOAuth:
       type: oauth2
