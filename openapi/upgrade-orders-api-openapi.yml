@@ -108,6 +108,36 @@ paths:
                     $ref: '#/components/schemas/Card'
 components:
   schemas:
+    BillingContact:
+      type: object
+      properties:
+        city:
+          type: string
+          description: Billing contact city.
+          example: New York City
+        country:
+          type: string
+          description: Billing contact country.
+          enum:
+          - US
+          - CA
+        dateOfBirth:
+          type: string
+          format: date
+          description: Billing contact date of birth in YYYY-MM-DD format.
+          example: '1996-10-21'
+        email:
+          type: string
+          description: Billing contact email.
+          example: sample@flexpay.com
+        firstName:
+          type: string
+          description: Billing contact first name.
+          example: Arthur
+        lastName:
+          type: string
+          description: Billing contact last name.
+          example: Davis
     Order:
       type: object
       description: Order details (documented subset — see https://docs.uplift.com/docs/high-level-schema-overview for the full schema guidance).
@@ -160,36 +190,6 @@ components:
             postalCode:
               type: string
               example: '99999'
-    BillingContact:
-      type: object
-      properties:
-        city:
-          type: string
-          description: Billing contact city.
-          example: New York City
-        country:
-          type: string
-          description: Billing contact country.
-          enum:
-          - US
-          - CA
-        dateOfBirth:
-          type: string
-          format: date
-          description: Billing contact date of birth in YYYY-MM-DD format.
-          example: '1996-10-21'
-        email:
-          type: string
-          description: Billing contact email.
-          example: sample@flexpay.com
-        firstName:
-          type: string
-          description: Billing contact first name.
-          example: Arthur
-        lastName:
-          type: string
-          description: Billing contact last name.
-          example: Davis
   parameters:
     orderId:
       name: orderId
