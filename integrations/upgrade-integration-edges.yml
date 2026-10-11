@@ -1,0 +1,16 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/upgrade/integrations
+- https://n8n.io/integrations/upgrade/
+- https://composio.dev/toolkits/upgrade
+- https://monid.ai/tools/upgrade
+checked:
+- https://composio.dev/toolkits/upgrade
+- https://monid.ai/tools/upgrade
+- https://n8n.io/integrations/upgrade/
+- https://zapier.com/apps/upgrade/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
