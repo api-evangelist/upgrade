@@ -150,13 +150,6 @@ paths:
                 $ref: '#/components/schemas/Transaction'
 components:
   parameters:
-    idempotencyKey:
-      name: Idempotency-Key
-      in: header
-      required: true
-      description: Idempotency key to prevent duplicate requests.
-      schema:
-        type: string
     transactionId:
       name: transactionId
       in: path
@@ -164,6 +157,13 @@ components:
       schema:
         type: string
         format: uuid
+    idempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      description: Idempotency key to prevent duplicate requests.
+      schema:
+        type: string
   schemas:
     TransactionAmountRequest:
       type: object

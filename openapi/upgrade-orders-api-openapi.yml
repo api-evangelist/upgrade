@@ -107,6 +107,14 @@ paths:
                   card:
                     $ref: '#/components/schemas/Card'
 components:
+  parameters:
+    orderId:
+      name: orderId
+      in: path
+      required: true
+      description: Order ID
+      schema:
+        type: string
   schemas:
     BillingContact:
       type: object
@@ -190,14 +198,6 @@ components:
             postalCode:
               type: string
               example: '99999'
-  parameters:
-    orderId:
-      name: orderId
-      in: path
-      required: true
-      description: Order ID
-      schema:
-        type: string
   securitySchemes:
     flexPayOAuth:
       type: oauth2
